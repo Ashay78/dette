@@ -1,5 +1,173 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-test
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        Dette
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 border-right">
+                                <h1 class="text-center text-info">eux -> moi</h1>
+                                <hr>
+                                {% for debt in debts %}
+                                    {% if debt.userReceives.id == myUser.id %}
+                                        {% if not debt.isSubscription %}
+                                            <div>
+                                                <h5>{{ debt.name }} - {{ debt.date | date("d/m/Y") }}</h5>
+                                                <ul>
+                                                    {% for RUserDebt in debt.rUserDebts %}
+                                                        <li>{{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }}
+                                                            : {{ RUserDebt.amount }} €
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="col-6">
+                                <h1 class="text-center text-info">moi -> eux</h1>
+                                <hr>
+                                {% for debt in debts %}
+                                    {% if debt.userReceives.id != myUser.id %}
+                                        {% if not debt.isSubscription %}
+                                            <div>
+                                                <h5>{{ debt.name }} - {{ debt.date | date("d/m/Y") }}</h5>
+                                                <ul>
+                                                    {% for RUserDebt in debt.rUserDebts %}
+                                                        <li>{{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }}
+                                                            : {{ RUserDebt.amount }} €
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        Abonnement
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 border-right">
+                                <h1 class="text-center text-info">Mes abonnements</h1>
+                                <hr>
+                                {% for debt in debts %}
+                                    {% if debt.userReceives.id == myUser.id %}
+                                        {% if debt.isSubscription %}
+                                            <div>
+                                                <h5>{{ debt.name }} - {{ debt.date | date("d/m/Y") }}</h5>
+                                                <ul>
+                                                    {% for RUserDebt in debt.rUserDebts %}
+                                                        <li>{{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }}
+                                                            - {{ RUserDebt.monthSubscription }} €/mois
+                                                            : {{ RUserDebt.amount }} €
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="col-6">
+                                <h1 class="text-center text-info">Leurs abonnements</h1>
+                                <hr>
+                                {% for debt in debts %}
+                                    {% if debt.userReceives.id != myUser.id %}
+                                        {% if debt.isSubscription %}
+                                            <div>
+                                                <h5>{{ debt.name }} - {{ debt.date | date("d/m/Y") }}</h5>
+                                                <ul>
+                                                    {% for RUserDebt in debt.rUserDebts %}
+                                                        <li>{{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }}
+                                                            - {{ RUserDebt.monthSubscription }} €/mois
+                                                            : {{ RUserDebt.amount }} €
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Recevoir
+                            </div>
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                    <h1>{{ recevoir }} €</h1>
+                                    {% for userToUser in userToUsers %}
+                                        {% if  userToUser.firstUser.id == myUser.id %}
+                                            <footer class="blockquote-footer">{{ userToUser.secondUser.firstName }} {{ userToUser.secondUser.lastName }}</footer>
+                                        {% endif %}
+                                    {% endfor %}
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Donner
+                            </div>
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                    <h1 class="text-danger">{{ donner }} €</h1>
+                                    {% for userToUser in userToUsers %}
+                                        {% if  userToUser.secondUser.id == myUser.id %}
+                                                <footer class="blockquote-footer">{{ userToUser.firstUser.firstName }} {{ userToUser.firstUser.lastName }}</footer>
+                                        {% endif %}
+                                    {% endfor %}
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <div class="card">
+                            <div class="card-header">
+                                Résumé
+                            </div>
+                            <table class="table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">De</th>
+                                    <th scope="col">A</th>
+                                    <th scope="col">montant</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for userToUser in userToUsers %}
+                                    <tr>
+                                        <td>{{ userToUser.secondUser.firstName }} {{ userToUser.secondUser.lastName }}</td>
+                                        <td>{{ userToUser.firstUser.firstName }} {{ userToUser.firstUser.lastName }}</td>
+                                        <td>{{ userToUser.amount }} €</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

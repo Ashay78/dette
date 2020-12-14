@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        Dette
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 d-flex flex-column">
+                                <hr>
+                                <div>
+                                    <h5>{{ debt.name }} - {{ debt.date | date("d/m/Y") }}</h5>
+                                    <ul>
+                                        {% for RUserDebt in debt.rUserDebts %}
+                                            <li class="w-100">
+                                                {% if RUserDebt.debt.isSubscription %}
+                                                    {{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }} - {{ RUserDebt.monthSubscription }} €/mois : {{ RUserDebt.amount }} €
+                                                {% else %}
+                                                    {{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }} - {{ RUserDebt.amount }} €
+
+                                                {% endif %}
+                                                <a class="float-right text-danger"
+                                                   href="{{ path('RUserDebt_delete', {'id': RUserDebt.id}) }}">deletes</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Add debt to user
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(formAddRUserDebt) }}
+                                {% if debt.isSubscription %}
+                                    <div class="form-group">
+                                        {{ form_label(formAddRUserDebt.monthSubscription) }}
+                                        {{ form_widget(formAddRUserDebt.monthSubscription) }}
+                                    </div>
+                                {% else %}
+                                    <div class="form-group d-none">
+                                        {{ form_label(formAddRUserDebt.monthSubscription) }}
+                                        {{ form_widget(formAddRUserDebt.monthSubscription) }}
+                                    </div>
+                                {% endif %}
+                                {{ form_row(formAddRUserDebt.amount) }}
+                                {{ form_row(formAddRUserDebt.userOwe) }}
+                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                                {{ form_end(formAddRUserDebt) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Update debt
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(formUpdateDebt) }}
+                                {{ form_row(formUpdateDebt.name) }}
+                                {{ form_row(formUpdateDebt.userReceives) }}
+                                {{ form_row(formUpdateDebt.date) }}
+                                <div class="form-check mb-3">
+                                    {{ form_widget(formUpdateDebt.isSubscription, {'attr': {'disabled': 'disabled'}}) }}
+                                    {{ form_label(formUpdateDebt.isSubscription) }}
+                                </div>
+                                <button type="submit" class="btn btn-primary">Modifier</button>
+                                {{ form_end(formUpdateDebt) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

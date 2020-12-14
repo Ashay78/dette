@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\UserRegister;
+use App\Entity\UserFake;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method UserRegister|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserRegister|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserRegister[]    findAll()
- * @method UserRegister[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method UserFake|null find($id, $lockMode = null, $lockVersion = null)
+ * @method UserFake|null findOneBy(array $criteria, array $orderBy = null)
+ * @method UserFake[]    findAll()
+ * @method UserFake[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRegisterRepository extends ServiceEntityRepository
+class UserFakeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, UserRegister::class);
+        parent::__construct($registry, UserFake::class);
     }
 
     // /**
-    //  * @return UserRegister[] Returns an array of UserRegister objects
+    //  * @return UserFake[] Returns an array of UserFake objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class UserRegisterRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?UserRegister
+    public function findOneBySomeField($value): ?User
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.exampleField = :val')
