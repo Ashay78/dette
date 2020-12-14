@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\UserFake;
-use App\Form\Type\UserFakeAdd;
+use App\Form\UserFakeAdd;
 use App\Repository\UserFakeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;

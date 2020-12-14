@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        Dette
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 border-right d-flex flex-column">
+                                <h1 class="text-center text-info">eux -> moi</h1>
+                                <hr>
+                                {% for debt in debts %}
+                                    {% if debt.userReceives.id == myUser.id %}
+                                        {% if not debt.isSubscription %}
+                                            <div>
+                                                <h5>{{ debt.name }} - {{ debt.date | date("d/m/Y") }}
+                                                    <a role="button" class="float-right text-danger  ml-3"
+                                                       href="{{ path('debt_delete', {'id': debt.id}) }}">delete</a>
+                                                    <a role="button" class="float-right text-warning"
+                                                       href="{{ path('debt', {'id': debt.id}) }}">update</a>
+                                                </h5>
+                                                <ul>
+                                                    {% for RUserDebt in debt.rUserDebts %}
+                                                        <li>{{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }}
+                                                            : {{ RUserDebt.amount }} €
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="col-6 d-flex flex-column">
+                                <h1 class="text-center text-info">moi -> eux</h1>
+                                <hr>
+                                {% for debt in debts %}
+                                    {% if debt.userReceives.id != myUser.id %}
+                                        {% if not debt.isSubscription %}
+                                            <div>
+                                                <h5>{{ debt.name }} - {{ debt.date | date("d/m/Y") }}
+                                                    <a role="button" class="float-right text-danger  ml-3"
+                                                       href="{{ path('debt_delete', {'id': debt.id}) }}">delete</a>
+                                                    <a role="button" class="float-right text-warning"
+                                                       href="{{ path('debt', {'id': debt.id}) }}">update</a>
+                                                </h5>
+                                                <ul>
+                                                    {% for RUserDebt in debt.rUserDebts %}
+                                                        <li>{{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }}
+                                                            : {{ RUserDebt.amount }} €
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        Abonnement
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 border-right">
+                                <h1 class="text-center text-info">Mes abonnements</h1>
+                                <hr>
+                                {% for debt in debts %}
+                                    {% if debt.userReceives.id == myUser.id %}
+                                        {% if debt.isSubscription %}
+                                            <div>
+                                                <h5>{{ debt.name }} - {{ debt.date | date("d/m/Y") }}
+                                                    <a role="button" class="float-right text-danger  ml-3"
+                                                       href="{{ path('debt_delete', {'id': debt.id}) }}">delete</a>
+                                                    <a role="button" class="float-right text-warning"
+                                                       href="{{ path('debt', {'id': debt.id}) }}">update</a>
+                                                </h5>
+                                                <ul>
+                                                    {% for RUserDebt in debt.rUserDebts %}
+                                                        <li>{{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }} - {{ RUserDebt.monthSubscription }} €/mois : {{ RUserDebt.amount }} €
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="col-6">
+                                <h1 class="text-center text-info">Leurs abonnements</h1>
+                                <hr>
+                                {% for debt in debts %}
+                                    {% if debt.userReceives.id != myUser.id %}
+                                        {% if debt.isSubscription %}
+                                            <div>
+                                                <h5>{{ debt.name }} - {{ debt.date | date("d/m/Y") }}
+                                                    <a role="button" class="float-right text-danger  ml-3"
+                                                       href="{{ path('debt_delete', {'id': debt.id}) }}">delete</a>
+                                                    <a role="button" class="float-right text-warning"
+                                                       href="{{ path('debt', {'id': debt.id}) }}">update</a>
+                                                </h5>
+                                                <ul>
+                                                    {% for RUserDebt in debt.rUserDebts %}
+                                                        <li>{{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }} - {{ RUserDebt.monthSubscription }} €/mois : {{ RUserDebt.amount }} €
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Add user
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(formAddUser) }}
+                                {{ form_row(formAddUser.firstName) }}
+                                {{ form_row(formAddUser.lastName) }}
+                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                                {{ form_end(formAddUser) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Add dette
+                            </div>
+                            <div class="card-body">
+                                {{ form_start(formAddDebt) }}
+                                {{ form_row(formAddDebt.name) }}
+                                {{ form_row(formAddDebt.userReceives) }}
+                                {{ form_row(formAddDebt.date) }}
+                                <div class="form-check mb-3">
+                                    {{ form_widget(formAddDebt.isSubscription) }}
+                                    {{ form_label(formAddDebt.isSubscription) }}
+                                </div>
+                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                                {{ form_end(formAddDebt) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <div class="card">
+                            <div class="card-header">
+                                All user
+                            </div>
+                            <table class="table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">first name</th>
+                                    <th scope="col">last name</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <th scope="row">{{ user.id }}</th>
+                                        <td>{{ user.firstName }}</td>
+                                        <td>{{ user.lastName }}</td>
+                                        <td><a role="button" class="btn btn-danger"
+                                               href="{{ path('delete_user', {'id': user.id}) }}">Delete</a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

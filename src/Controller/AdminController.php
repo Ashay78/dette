@@ -3,8 +3,8 @@ namespace App\Controller;
 
 use App\Entity\Debt;
 use App\Entity\UserFake;
-use App\Form\Type\DebtAdd;
-use App\Form\Type\UserFakeAdd;
+use App\Form\DebtAdd;
+use App\Form\UserFakeAdd;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
