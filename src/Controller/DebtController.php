@@ -1,14 +1,12 @@
 <?php
 
-
 namespace App\Controller;
-
 
 use App\Entity\Debt;
 use App\Entity\RUserDebt;
 use App\Entity\UserFake;
-use App\Form\Type\DebtAdd;
-use App\Form\Type\RUserDebtAdd;
+use App\Form\DebtAdd;
+use App\Form\RUserDebtAdd;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

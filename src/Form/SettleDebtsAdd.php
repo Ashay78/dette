@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Type;
+namespace App\Form;
 
 use App\Entity\SettleDebts;
 use App\Entity\UserFake;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-class settleDebtsAdd extends AbstractType
+class SettleDebtsAdd extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
