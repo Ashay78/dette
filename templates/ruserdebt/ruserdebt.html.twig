@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        Dette
+                    </div>
+                    <div class="card-body">
+                        {{ RUserDebt.userOwe.firstName }} {{ RUserDebt.userOwe.lastName }}
+                        - {{ RUserDebt.monthSubscription }} €/mois : {{ RUserDebt.amount }} €
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        Update debt
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(formUserAmount) }}
+                        {{ form_row(formUserAmount.amount) }}
+                        <button type="submit" class="btn btn-primary">ajouter</button>
+                        {{ form_end(formUserAmount) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
