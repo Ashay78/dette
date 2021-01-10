@@ -25,11 +25,14 @@ Run file ``installation.sh``
 rm -rf dette
 git clone https://github.com/Ashay78/dette.git
 cd dette
-sed -i '$ d' .env
+rm -f .env
+'' > .env
 echo "psql password :"
 read -r mdp
 var='DATABASE_URL="pgsql://gcousin:'$mdp'@127.0.0.1:5432/dette"'
 echo "$var" >> .env
+echo "APP_SECRET=c7652897af658b9a1123fede3477a107" >> .env
+echo "APP_ENV=dev" >> .env
 composer install
 yarn install
 yarn encore prod
