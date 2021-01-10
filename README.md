@@ -25,7 +25,6 @@ Run file ``installation.sh``
 rm -rf dette
 git clone https://github.com/Ashay78/dette.git
 cd dette
-rm -f .env
 '' > .env
 echo "psql password :"
 read -r mdp
