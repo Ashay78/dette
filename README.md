@@ -4,9 +4,9 @@
 
 Ce projet est en ligne sur le site : https://dette.gcousin.site/
 
-L'ojectif de ce projet est d'avoir un retour sur ce que je doit à mes amis et ce qu'il me doivent.
+L'ojectif de ce projet est d'avoir un retour sur ce que je dois à mes amis et ce qu'ils me doivent.
 
-On peut aussi retrouver les dettes qui sont du à un abonnment. Ces dettes vont s'incrémenter tous les mois automatiquement.
+On peut aussi retrouver les dettes qui sont dû à un abonnement. Ces dettes vont s'incrémenter tous les mois automatiquement.
 
 ## Installation
 ```
