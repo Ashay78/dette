@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: $POSTGRES_DATABASE
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    ports:
+      - '5432:5432'
+    volumes:
+      - dette-data:/var/lib/postgresql/data
+    networks:
+      - dette-network
+
+  php:
+    container_name: php
+    build:
+      args:
+        VERSION: $PHP_VERSION
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+      target: test
+    restart: always
+    volumes:
+      - .:/dette
+    depends_on:
+      - postgres
+    networks:
+      - dette-network
+
+  nginx:
+    container_name: nginx
+    build:
+      args:
+        VERSION: $NGINX_VERSION
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+      target: prod
+    depends_on:
+      - php
+    volumes:
+      - ./public:/dette/public
+    ports:
+      - "80:80"
+    restart: always
+    networks:
+      - dette-network
+
+
+volumes:
+  dette-data:
+    driver: local
+
+networks:
+  dette-network:
+    driver: bridge
