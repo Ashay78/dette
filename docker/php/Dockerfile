@@ -31,7 +31,7 @@ RUN apk add --no-cache --virtual dev-deps git; \
 	apk add --no-cache --virtual .api-phpexts-rundeps $runDeps; \
 	apk del .build-deps
 
-COPY ./docker/php/default.ini /usr/local/etc/php/conf.d/default.ini
+#COPY ./docker/php/default.ini /usr/local/etc/php/conf.d/default.ini
 
 # Installing composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -47,6 +47,8 @@ COPY . .
 # Install composer dependencies
 RUN composer install --no-interaction --optimize-autoloader
 
+COPY . .
+
 
 FROM dev AS prod
 
@@ -57,4 +59,6 @@ COPY . .
 RUN composer install --no-dev --no-interaction --optimize-autoloader && \
 	 apk del dev-deps && \
 	 rm -f /usr/local/bin/composer
+
+COPY . .
 
