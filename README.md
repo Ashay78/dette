@@ -10,4 +10,4 @@ On peut aussi retrouver les dettes qui sont dû à un abonnement. Ces dettes von
 
 ## Installation
 
-```git pull origin ```
+```git pull origin https://github.com/Ashay78/dette.git```
